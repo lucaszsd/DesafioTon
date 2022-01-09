@@ -13,6 +13,7 @@ import {
   Avatar,
   Spinner,
 } from '@ui-kitten/components';
+import TopNavigationHeader from 'components/TopNavigationHeader';
 import React from 'react';
 import { ListRenderItemInfo, View, ViewProps } from 'react-native';
 import { Breed, useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
@@ -57,9 +58,8 @@ const themedStyles = StyleService.create({
   },
 });
 
-const BackIcon = (props: IconProps) => <Icon {...props} name="arrow-back" />;
 
-const StoreItems = ({ navigation }: NavProps[RouteNames.Dogs]) => {
+const StoreItems = () => {
   const styles = useStyleSheet(themedStyles);
   const { data = [], isFetching } = useFetchBreedsQuery(20);
  
@@ -70,13 +70,7 @@ const StoreItems = ({ navigation }: NavProps[RouteNames.Dogs]) => {
       </Layout>
     );
   }
-
-  // const Header = (
-  //   <View>
-  //     <Text category="h1">Number of Dogs</Text>
-  //   </View>
-  // );
-
+  
   const renderItemHeader = (
     headerProps: ViewProps | undefined,
     breed: Breed,
@@ -108,27 +102,14 @@ const StoreItems = ({ navigation }: NavProps[RouteNames.Dogs]) => {
   );
 
   return (
-    <Layout style={styles.maxFlex}>
-      <TopNavigation
-        title={'Produtos'}
-        alignment="center"
-        // accessoryLeft={BackAction}
-      />
-
-      {/* <Card style={styles.card} header={Header}>
-        <Text>{data.length}</Text>
-      </Card> */}
-
+    <Layout style={styles.maxFlex}>  
+      <TopNavigationHeader title = {'Produtos'}/> 
       <List
         style={styles.maxFlex}
         contentContainerStyle={styles.contentContainer}
         data={data}
         renderItem={renderItem}
-      />
-
-      {/* <Button onPress={navigation.goBack} style={styles.btn}>
-        <Text>Goto Counter Screen</Text>
-      </Button> */}
+      /> 
     </Layout>
   );
 };
