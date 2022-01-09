@@ -6,8 +6,9 @@ import SyncStorage from 'sync-storage';
 import Counter from 'pages/Counter/Counter';
 import Dogs from 'pages/Dogs/Dogs';
 import { NAV_KEYS, RootStackParamList, RouteNames } from './nav_types';
+import StoreItems from 'pages/StoreItems';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
 function NavigationStack() {
   const [isAppReady, setIsAppReady] = React.useState(false);
@@ -72,7 +73,8 @@ function NavigationStack() {
       initialState={initialState}
       onStateChange={onNavStateChange}
     >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}> 
+        <Stack.Screen name={RouteNames.StoreItems} component={StoreItems} />
         <Stack.Screen name={RouteNames.Counter} component={Counter} />
         <Stack.Screen name={RouteNames.Dogs} component={Dogs} />
       </Stack.Navigator>
