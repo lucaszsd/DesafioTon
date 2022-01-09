@@ -2,6 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export enum RouteNames {
   StoreItems = 'StoreItems',
+  ShoppingCart = 'ShoppingCart',
   Counter = 'Counter',
   Dogs = 'Dogs',
 }

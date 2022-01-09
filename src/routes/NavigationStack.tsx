@@ -7,6 +7,8 @@ import Counter from 'pages/Counter/Counter';
 import Dogs from 'pages/Dogs/Dogs';
 import { NAV_KEYS, RootStackParamList, RouteNames } from './nav_types';
 import StoreItems from 'pages/StoreItems';
+import ShoppingCart from 'pages/ShoppingCart';
+import NavigationService from './NavigationService';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,12 +73,14 @@ function NavigationStack() {
   return (
     <NavigationContainer
       initialState={initialState}
+      ref={NavigationService.navigationRef}
       onStateChange={onNavStateChange}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}> 
         <Stack.Screen name={RouteNames.StoreItems} component={StoreItems} />
-        <Stack.Screen name={RouteNames.Counter} component={Counter} />
-        <Stack.Screen name={RouteNames.Dogs} component={Dogs} />
+        <Stack.Screen name={RouteNames.ShoppingCart} component={ShoppingCart}/>
+        {/* <Stack.Screen name={RouteNames.Counter} component={Counter} />
+        <Stack.Screen name={RouteNames.Dogs} component={Dogs} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
