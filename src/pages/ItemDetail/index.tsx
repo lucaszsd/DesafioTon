@@ -108,7 +108,7 @@ const ItemDetail = ({ route }: NavProps[RouteNames.ItemDetail]) => {
       <View style = {styles.itemContainer}>
         <Text category={'h5'}>{item.name}</Text>   
         <View style = {[{flexDirection: 'row', flexWrap: 'wrap'}, styles.descriptionDetail]}>
-          {tags.map(temperamentTrait => <Button size={'tiny'} style = {styles.tags}>{temperamentTrait}</Button>)}
+          {tags.map((temperamentTrait, index) => <Button key = {index} size={'tiny'} style = {styles.tags}>{temperamentTrait}</Button>)}
         </View> 
         <Text style = {styles.descriptionDetail}>{`Origem: ${item.origin}`}</Text>    
         <Text style = {styles.descriptionDetail}>{`Tamanho: ${item.height.metric} cm`}</Text>    
