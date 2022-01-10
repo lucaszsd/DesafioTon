@@ -13,3 +13,8 @@ export interface Product {
   quantity: Number,
   selected: Boolean,
 }
+
+export interface ShoppingCartReducerState {
+  products: Breed[];
+  shoppingCart: Product[];
+}

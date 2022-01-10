@@ -15,14 +15,18 @@ import {
 } from '@ui-kitten/components';
 import TopNavigationHeader from 'components/TopNavigationHeader';
 import React from 'react';
-import { ListRenderItemInfo, View, ViewProps } from 'react-native';
+import { Image, ListRenderItemInfo, View, ViewProps } from 'react-native';
 import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
-import { NavProps, RouteNames } from '../../routes/nav_types';
+import { NavProps, RouteNames } from '../../routes/nav_types'; 
+import { Breed, ShoppingCartReducerState } from 'types/interfaces';
+import { useSelector } from 'react-redux';
+import { useAppSelector } from 'hooks/store'; 
 
-import { Breed } from 'types/interfaces';
-
+ 
 const themedStyles = StyleService.create({
   btn: { margin: 16 },
+
+  itemContainer: { padding: 16},
 
   maxFlex: {
     flex: 1, 
@@ -43,7 +47,9 @@ const themedStyles = StyleService.create({
   },
 
   item: {
-    marginVertical: 4,
+    marginVertical: 8,
+    paddingHorizontal: 16,
+    flex: 1, 
   },
 
   temperamentWrapper: {
@@ -55,7 +61,7 @@ const themedStyles = StyleService.create({
   },
 
   temperament: {
-    width: '80%',
+    // width: '80%',
     paddingLeft: 8,
   },
 });
@@ -63,9 +69,9 @@ const themedStyles = StyleService.create({
 
 const ShoppingCart = () => {
   const styles = useStyleSheet(themedStyles);
-  const { data = [], isFetching } = useFetchBreedsQuery(20);
-   
-  console.log('\n\n\n\n\nJSONS ' + JSON.stringify(data))
+  const { data = [], isFetching } = useFetchBreedsQuery(20);  
+  const cart = useAppSelector(state => state.shoppingCartReducer.shoppingCart); 
+ 
   if (isFetching) {
     return (
       <Layout style={[styles.maxFlex, styles.centerContent]}>
@@ -88,31 +94,50 @@ const ShoppingCart = () => {
     breed: Breed,
   ) => <Text {...footerProps}>{breed.life_span}</Text>;
 
-  const renderItem = ({ item }: ListRenderItemInfo<Breed>) => (
-    <Card
-      style={styles.item}
-      status="basic"
-      header={headerProps => renderItemHeader(headerProps, item)}
-      footer={footerProps => renderItemFooter(footerProps, item)}
-    >
-      <View style={styles.temperamentWrapper}>
-        <Avatar size="giant" source={{ uri: item.image.url }} />
-        <Text category="p2" style={styles.temperament}>
-          {item.temperament}
-        </Text>
-      </View>
-    </Card>
-  );
+  const renderItem = ({ item }: ListRenderItemInfo<Breed>) => {
 
+    const imageItem = {uri: 'https://www.fillmurray.com/100/100'};
+
+    return(  
+      <View style = {styles.item}>
+        <View style={styles.temperamentWrapper}>
+          <Avatar size="giant" source={imageItem} />
+          <Text category="p2" style={styles.temperament}>
+            {item.id}
+          </Text>
+          <Button>Add</Button>
+        </View> 
+      </View>
+    )
+  };
+
+  const EmptyShoppingCart = () => {
+     
+    const imageCart = {uri: 'https://www.fillmurray.com/100/100'};
+
+    return(
+      <View style={[styles.maxFlex, styles.centerContent]}>
+          <Image source={imageCart} style={{ height: 180, width: 180 }} />
+      </View>
+    )
+  }
+   
   return (
     <Layout style={styles.maxFlex}>  
       <TopNavigationHeader backButton={true} title = {'Carrinho de Compras'}/> 
+      <View style = {styles.itemContainer}>
+        <Text>{`${cart.length} Items selecionados`}</Text>
+      </View>
+      {cart.length == 0? 
+      <EmptyShoppingCart/>:
       <List
-        style={styles.maxFlex}
-        contentContainerStyle={styles.contentContainer}
-        data={data}
-        renderItem={renderItem}
-      /> 
+      style={styles.maxFlex}
+      contentContainerStyle={styles.contentContainer}
+      data={cart}
+      renderItem={renderItem}
+    /> 
+    }
+     
     </Layout>
   );
 };

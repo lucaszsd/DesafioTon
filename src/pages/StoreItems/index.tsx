@@ -17,50 +17,40 @@ import TopNavigationHeader from 'components/TopNavigationHeader';
 import React from 'react';
 import { FlatList, ListRenderItemInfo, View, ViewProps } from 'react-native'; 
 import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
-import { NavProps, RouteNames } from '../../routes/nav_types';
-import shoppingActions from 'store/shoppingCart/actions';
+import { NavProps, RouteNames } from '../../routes/nav_types'; 
 import { Breed } from 'types/interfaces';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch } from 'react-redux'; 
+import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
 const themedStyles = StyleService.create({
-  btn: { margin: 16 },
-
+  btn: { margin: 16 }, 
   maxFlex: {
     flex: 1, 
-  },
-
+  }, 
   centerContent: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
+  }, 
   card: {
     margin: 16,
-  },
-
+  }, 
   contentContainer: {
     paddingHorizontal: 8,
     paddingVertical: 4,
-  },
-
+  }, 
   item: {
     marginVertical: 16,
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-
+  }, 
   temperamentWrapper: {
     display: 'flex', 
     alignItems: 'center',
     justifyContent: 'center',
     // backgroundColor: 'red',
     flexWrap: 'wrap',
-  },
-
-  temperament: {
-    // width: '80%',
-    // paddingLeft: 8,
+  }, 
+  temperament: { 
     marginTop: 8,
     fontWeight: 'bold',
   },
@@ -68,9 +58,12 @@ const themedStyles = StyleService.create({
 
 
 const StoreItems = () => {
+  
+  const dispatch = useDispatch()
+  
   const styles = useStyleSheet(themedStyles);
   const { data = [], isFetching } = useFetchBreedsQuery(20);
-  // console.log(JSON.stringify(useFetchBreedsQuery(10)));
+  
   if (isFetching) {
     return (
       <Layout style={[styles.maxFlex, styles.centerContent]}>
@@ -78,49 +71,15 @@ const StoreItems = () => {
       </Layout>
     );
   }
-  const dispatch = useDispatch()
-  
-  const renderItemHeader = (
-    headerProps: ViewProps | undefined,
-    breed: Breed,
-  ) => (
-    <View {...headerProps}>
-      <Text category="h6">{breed.name}</Text>
-    </View>
-  );
-
-  // const renderItemFooter = (
-  //   footerProps: ViewProps | undefined,
-  //   breed: Breed,
-  // // ) => <Text {...footerProps}>{breed.life_span}</Text>;
-  // ) => <Button status = {'success'} style = {styles.btn}>Add</Button>;
-
-  const renderItem = ({ item }: ListRenderItemInfo<Breed>) => (
-    // <Card
-    //   style={styles.item}
-    //   status="basic"
-    //   // header={headerProps => renderItemHeader(headerProps, item)}
-    //   footer={footerProps => renderItemFooter(footerProps, item)}
-    // >
-    //   <View style={styles.temperamentWrapper}>
-    //     <Avatar size="giant" shape='rounded' style = {{width: 96, height: 96}} source={{ uri: item.image.url }} />
-    //     <Text category="s1" style={styles.temperament}>
-    //       {item.name}
-    //     </Text>
-    //   </View>
-    // </Card>
-    <View
-      style={styles.item}
-      // status="basic"
-      // header={headerProps => renderItemHeader(headerProps, item)}
-      // footer={footerProps => renderItemFooter(footerProps, item)}
-    >
+   
+  const renderItem = ({ item }: ListRenderItemInfo<Breed>) => ( 
+    <View style={styles.item}>
       <View style={styles.temperamentWrapper}>
         <Avatar size="giant" shape='rounded' style = {{width: 96, height: 96}} source={{ uri: item.image.url }} />
         <Text category="s1" style={styles.temperament}>
           {item.name}
         </Text>
-      <Button status = {'success'} style = {styles.btn} onPress={() => dispatch(shoppingActions.addProductToCart(item.id))}>Add</Button>
+      <Button status = {'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>Add</Button>
       </View>
     </View>
   );

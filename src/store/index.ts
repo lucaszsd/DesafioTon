@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from 'features/counter/counter_slice';
 import dogsApiSlice from 'features/dogs/dogs_api_slice';
-import { shoppingCartReducer } from './shoppingCart/reducers';
+import shoppingCartSlice from 'features/shoppingCart/shoppingCartSlice'; 
 
 const store = configureStore({
-  reducer: {
-    shoppingCartReducer: shoppingCartReducer,
+  reducer: { 
+    shoppingCartReducer: shoppingCartSlice,
     counter: counterReducer,
     [dogsApiSlice.reducerPath]: dogsApiSlice.reducer,
   },
