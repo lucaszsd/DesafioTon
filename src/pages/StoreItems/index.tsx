@@ -15,7 +15,7 @@ import {
 } from '@ui-kitten/components';
 import TopNavigationHeader from 'components/TopNavigationHeader';
 import React from 'react';
-import { ListRenderItemInfo, View, ViewProps } from 'react-native';
+import { FlatList, ListRenderItemInfo, View, ViewProps } from 'react-native'; 
 import { Breed, useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
 import { NavProps, RouteNames } from '../../routes/nav_types';
 
@@ -41,20 +41,25 @@ const themedStyles = StyleService.create({
   },
 
   item: {
-    marginVertical: 4,
+    marginVertical: 16,
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   temperamentWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: 'flex', 
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    // backgroundColor: 'red',
     flexWrap: 'wrap',
   },
 
   temperament: {
-    width: '80%',
-    paddingLeft: 8,
+    // width: '80%',
+    // paddingLeft: 8,
+    marginTop: 8,
+    fontWeight: 'bold',
   },
 });
 
@@ -80,32 +85,48 @@ const StoreItems = () => {
     </View>
   );
 
-  const renderItemFooter = (
-    footerProps: ViewProps | undefined,
-    breed: Breed,
-  ) => <Text {...footerProps}>{breed.life_span}</Text>;
+  // const renderItemFooter = (
+  //   footerProps: ViewProps | undefined,
+  //   breed: Breed,
+  // // ) => <Text {...footerProps}>{breed.life_span}</Text>;
+  // ) => <Button status = {'success'} style = {styles.btn}>Add</Button>;
 
   const renderItem = ({ item }: ListRenderItemInfo<Breed>) => (
-    <Card
+    // <Card
+    //   style={styles.item}
+    //   status="basic"
+    //   // header={headerProps => renderItemHeader(headerProps, item)}
+    //   footer={footerProps => renderItemFooter(footerProps, item)}
+    // >
+    //   <View style={styles.temperamentWrapper}>
+    //     <Avatar size="giant" shape='rounded' style = {{width: 96, height: 96}} source={{ uri: item.image.url }} />
+    //     <Text category="s1" style={styles.temperament}>
+    //       {item.name}
+    //     </Text>
+    //   </View>
+    // </Card>
+    <View
       style={styles.item}
-      status="basic"
-      header={headerProps => renderItemHeader(headerProps, item)}
-      footer={footerProps => renderItemFooter(footerProps, item)}
+      // status="basic"
+      // header={headerProps => renderItemHeader(headerProps, item)}
+      // footer={footerProps => renderItemFooter(footerProps, item)}
     >
       <View style={styles.temperamentWrapper}>
-        <Avatar size="giant" source={{ uri: item.image.url }} />
-        <Text category="p2" style={styles.temperament}>
-          {item.temperament}
+        <Avatar size="giant" shape='rounded' style = {{width: 96, height: 96}} source={{ uri: item.image.url }} />
+        <Text category="s1" style={styles.temperament}>
+          {item.name}
         </Text>
+      <Button status = {'success'} style = {styles.btn}>Add</Button>
       </View>
-    </Card>
+    </View>
   );
 
   return (
     <Layout style={styles.maxFlex}>  
       <TopNavigationHeader title = {'Produtos'}/> 
-      <List
+      <FlatList
         style={styles.maxFlex}
+        numColumns={2}
         contentContainerStyle={styles.contentContainer}
         data={data}
         renderItem={renderItem}
