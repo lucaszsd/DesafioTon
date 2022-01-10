@@ -28,5 +28,8 @@ Para o gerenciamento das ações dentro do app estou usando redux através do [R
 Desenvolvi usando emulador para Android, não tive como testar no iOS, então pode ter alguma incompatibilidade a ser resolvida para iPhone, como exemplo o ajuste do \
 
 ## Capturas de Tela
+
+![Loja](https://drive.google.com/file/d/1b3DklZWDBAfIhj7fO_CZIum_MvhgTwlZ/view?usp=sharing "Loja")
+ 
  
 
