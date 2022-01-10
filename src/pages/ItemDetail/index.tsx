@@ -16,10 +16,6 @@ import { Breed, Product } from 'types/interfaces';
 import { NavProps, RouteNames } from 'routes/nav_types'; 
 import TopNavigationHeader from 'components/TopNavigationHeader'; 
 import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice'; 
-
-interface selectedItems{
-  selectedItems: number
-} 
  
 const themedStyles = StyleService.create({
   btn: { margin: 16 },
@@ -117,8 +113,8 @@ const ItemDetail = ({ route }: NavProps[RouteNames.ItemDetail]) => {
       </View>
       <View style = {{position: 'absolute', bottom: 0, width: '100%'}}>
         {shoppingCartItem ? 
-          <Button status = {'danger'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}>{'remove'}</Button>:
-          <Button status = {'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>{'Add'}</Button> 
+          <Button status = {'danger'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}>Remover do carrinho</Button>:
+          <Button status = {'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>Adicionar no carrinho</Button> 
         }
       </View>
     </Layout>
