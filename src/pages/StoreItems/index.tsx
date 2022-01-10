@@ -38,7 +38,7 @@ const themedStyles = StyleService.create({
     paddingVertical: 16,
   }, 
   item: {
-    marginVertical: 16,
+    paddingVertical: 16,
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center'
@@ -51,7 +51,9 @@ const themedStyles = StyleService.create({
   }, 
   temperament: { 
     marginTop: 16,
+    marginHorizontal: 8,
     fontWeight: 'bold', 
+    textAlign: 'center',
   },
 });
 

@@ -18,6 +18,7 @@ import { Image, ListRenderItemInfo, View } from 'react-native';
 import { useAppSelector } from 'hooks/store'; 
 import { Breed, Product } from 'types/interfaces';  
 import { RouteNames } from '../../routes/nav_types'; 
+import NavigationService from 'routes/NavigationService'; 
 import TopNavigationHeader from 'components/TopNavigationHeader'; 
 import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
 
@@ -50,6 +51,12 @@ const themedStyles = StyleService.create({
   contentContainer: {
     paddingHorizontal: 8,
     paddingVertical: 16,
+  },
+
+  footerSection: {
+    bottom: 0, 
+    width: '100%',
+    position: 'absolute',
   },
 
   item: {
@@ -113,6 +120,9 @@ const ShoppingCart = () => {
         <Text category={'h6'}>Carrinho vazio</Text>
         <Image source={imageCart} style={{ height: 196, width: 196 }} />
         <Text>Selecione itens na loja</Text>
+        <View style = {styles.footerSection}>
+          <Button style = {styles.btn} onPress={() => NavigationService.navigate(RouteNames.StoreItems)}>Voltar para a loja</Button>
+        </View>
       </View>
     )
   }
