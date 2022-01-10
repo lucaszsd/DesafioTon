@@ -18,7 +18,7 @@ import React from 'react';
 import { Image, ListRenderItemInfo, View, ViewProps } from 'react-native';
 import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
 import { NavProps, RouteNames } from '../../routes/nav_types'; 
-import { Breed, ShoppingCartReducerState } from 'types/interfaces';
+import { Breed, Product, ShoppingCartReducerState } from 'types/interfaces';
 import { useSelector } from 'react-redux';
 import { useAppSelector } from 'hooks/store'; 
 
@@ -94,7 +94,7 @@ const ShoppingCart = () => {
     breed: Breed,
   ) => <Text {...footerProps}>{breed.life_span}</Text>;
 
-  const renderItem = ({ item }: ListRenderItemInfo<Breed>) => {
+  const renderItem = ({ item }: ListRenderItemInfo<Product>) => {
 
     const imageItem = {uri: 'https://www.fillmurray.com/100/100'};
 
