@@ -23,6 +23,8 @@ Sobre possiveis melhorias adicionaria animações nas listagens, ao remover os i
 
 ## Tech Stuff
 
+O projeto foi criado baseado no seguinte [boilerplate](https://github.com/shettayyy/React_Native_Seed)
+
 Para o gerenciamento das ações dentro do app estou usando redux através do [Redux Toolkit](https://redux-toolkit.js.org/). Uma melhoria imediata seria persistir, que por agora, não está sendo feito. A cada vez que é carregado o app novamente, o carrinho está sendo perdido.
 
 Desenvolvi usando emulador para Android, não tive como testar no iOS, então pode ter alguma incompatibilidade a ser resolvida para iPhone, como exemplo o ajuste do \
