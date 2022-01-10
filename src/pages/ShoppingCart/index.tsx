@@ -12,7 +12,7 @@ import {
   IconProps,
 } from '@ui-kitten/components';
 import { useDispatch } from 'react-redux';
-import { Image, ListRenderItemInfo, View } from 'react-native';
+import { Image, ListRenderItemInfo, TouchableNativeFeedback, View } from 'react-native';
 
 //Importações Intearnas
 import { useAppSelector } from 'hooks/store'; 
@@ -63,7 +63,7 @@ const themedStyles = StyleService.create({
     flex: 1, 
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: 8,
+    paddingVertical: 8,
     paddingLeft: 16,
   },
 
@@ -99,15 +99,17 @@ const ShoppingCart = () => {
     const product = productData(item.id);
  
     return(  
-      <View style = {styles.item}>
-        <View style={styles.temperamentWrapper}>
-          <Avatar size="giant" shape = 'rounded' source={{uri:product.image.url}} />
-          <Text category="p2" style={styles.temperament}>
-            {product.name}
-          </Text>
-        </View> 
-        <Button size = 'giant' appearance={'ghost'} status = 'danger' style = {styles.removeBtn} accessoryRight={RemoveIcon} onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}/>
-      </View>
+      <TouchableNativeFeedback onPress={() => NavigationService.navigate(RouteNames.ItemDetail, product)}>
+        <View style = {styles.item}>
+          <View style={styles.temperamentWrapper}>
+            <Avatar size="giant" shape = 'rounded' source={{uri:product.image.url}} />
+            <Text category="p2" style={styles.temperament}>
+              {product.name}
+            </Text>
+          </View> 
+          <Button size = 'giant' appearance={'ghost'} status = 'danger' style = {styles.removeBtn} accessoryRight={RemoveIcon} onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}/>
+        </View>
+      </TouchableNativeFeedback>
     )
   };
 
