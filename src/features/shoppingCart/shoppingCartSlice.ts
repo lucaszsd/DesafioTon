@@ -10,36 +10,13 @@ const initialState: ShoppingCartReducerState = {
 const shoppingCartSlice = createSlice({
   name: 'shoppingCart',
   initialState,
-  reducers: {
-    // increment
-    increment(state) {
-      // state.value += 1;
-    },
-
-    // decrement
-    decrement(state) {
-      // state.value -= 1;
-    },
-
-    // reset
-    reset(state) {
-      // state.value = initialState.value;
-    },
-
-    // increment by custom count
-    addCount(state, action: PayloadAction<number>) {
-      // state.value += action.payload;
-    },
-
+  reducers: { 
     setProductList(state, action: PayloadAction<Breed[]>){
-      state.products = action.payload;
-      console.log('Lista de Produtos: ', action.payload)
+      state.products = action.payload; 
     },
 
-    addProductToCart(state, action: PayloadAction<string>){
-      // console.log(action.payload)
-      state.shoppingCart.push({id: action.payload, quantity: 1, selected: true})
-      // console.log(state.shoppingCart);
+    addProductToCart(state, action: PayloadAction<string>){ 
+      state.shoppingCart.push({id: action.payload, quantity: 1, selected: true}) 
     },
 
     removeProductFromCart(state, action: PayloadAction<string>){ 
@@ -49,5 +26,5 @@ const shoppingCartSlice = createSlice({
   },
 });
 
-export const { increment, decrement, reset, addCount, addProductToCart, removeProductFromCart, setProductList } = shoppingCartSlice.actions;
+export const { addProductToCart, removeProductFromCart, setProductList } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;
