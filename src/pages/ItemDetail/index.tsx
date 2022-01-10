@@ -17,33 +17,19 @@ import { NavProps, RouteNames } from 'routes/nav_types';
 import TopNavigationHeader from 'components/TopNavigationHeader'; 
 import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice'; 
  
+interface DescriptionProps{
+  item: Breed;
+}
+
 const themedStyles = StyleService.create({
   btn: { margin: 16 },
-
-  removeBtn: { borderRadius: 30},
-
+ 
   itemContainer: { padding: 16},
-
-  selectedItems: { fontWeight: 'bold' },
-
+ 
   maxFlex: {
     flex: 1, 
   },
-
-  centerContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  card: {
-    margin: 16,
-  },
-
-  contentContainer: {
-    paddingHorizontal: 8,
-    paddingVertical: 16,
-  },
-
+   
   item: {
     flex: 1, 
     flexDirection: 'row',
@@ -51,15 +37,7 @@ const themedStyles = StyleService.create({
     marginVertical: 8,
     paddingLeft: 16,
   },
-
-  temperamentWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  },
-
+ 
   tags: {
     borderRadius: 24,
     margin: 4,
@@ -76,7 +54,9 @@ const themedStyles = StyleService.create({
 
 
 const ItemDetail = ({ route }: NavProps[RouteNames.ItemDetail]) => {
+
   const dispatch = useDispatch()
+
   const styles = useStyleSheet(themedStyles); 
   const cart = useAppSelector(state => state.shoppingCartReducer.shoppingCart); 
  
@@ -88,8 +68,6 @@ const ItemDetail = ({ route }: NavProps[RouteNames.ItemDetail]) => {
   }
 
   const shoppingCartItem = shoppingCartData(item.id)
-
-  console.log("Item: ", item)
   
   const tagsGenerator = (temperament: string) => { 
     return temperament.split(',') 
@@ -97,20 +75,26 @@ const ItemDetail = ({ route }: NavProps[RouteNames.ItemDetail]) => {
  
   const tags = tagsGenerator(item.temperament);
  
+  const Description = (props: DescriptionProps) => {
+    return(
+      <View style = {styles.itemContainer}>
+        <Text category={'h5'}>{props.item.name}</Text>   
+        <View style = {[{flexDirection: 'row', flexWrap: 'wrap'}, styles.descriptionDetail]}>
+          {tags.map((temperamentTrait, index) => <Button key = {index} size={'tiny'} style = {styles.tags}>{temperamentTrait}</Button>)}
+        </View>  
+        <Text style = {styles.descriptionDetail}>{`Origem: ${props.item.origin}`}</Text>     
+        <Text style = {styles.descriptionDetail}>{`Tamanho: ${props.item.height.metric} cm`}</Text>    
+        <Text style = {styles.descriptionDetail}>{`Tempo de vida: ${props.item.life_span.replace('years', 'anos')}`}</Text>    
+        <Text style = {styles.descriptionDetail}>{`Peso: ${props.item.weight.metric} Kg`}</Text>    
+      </View> 
+    )
+  }
+
   return (
     <Layout style={styles.maxFlex}>  
       <TopNavigationHeader backButton={true} title = {'Detalhe do item'}/>  
       <Image source={{uri: item.image.url}} style={{ height: 196, width: '100%' }} />
-      <View style = {styles.itemContainer}>
-        <Text category={'h5'}>{item.name}</Text>   
-        <View style = {[{flexDirection: 'row', flexWrap: 'wrap'}, styles.descriptionDetail]}>
-          {tags.map((temperamentTrait, index) => <Button key = {index} size={'tiny'} style = {styles.tags}>{temperamentTrait}</Button>)}
-        </View> 
-        <Text style = {styles.descriptionDetail}>{`Origem: ${item.origin}`}</Text>    
-        <Text style = {styles.descriptionDetail}>{`Tamanho: ${item.height.metric} cm`}</Text>    
-        <Text style = {styles.descriptionDetail}>{`Tempo de vida: ${item.life_span.replace('years', 'anos')}`}</Text>    
-        <Text style = {styles.descriptionDetail}>{`Peso: ${item.weight.metric} Kg`}</Text>    
-      </View>
+      <Description item = {item}/>
       <View style = {{position: 'absolute', bottom: 0, width: '100%'}}>
         {shoppingCartItem ? 
           <Button status = {'danger'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}>Remover do carrinho</Button>:
