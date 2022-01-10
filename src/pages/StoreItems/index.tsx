@@ -94,7 +94,10 @@ const StoreItems = () => {
             </Text>
           </View>
           <View style = {{width:'100%'}}>
-            <Button status = {shoppingCartItem ? 'danger' : 'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>{shoppingCartItem ? 'Remove' : 'Add'}</Button>
+            {shoppingCartItem ? 
+              <Button status = {'danger'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}>{'remove'}</Button>:
+              <Button status = {'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>{'Add'}</Button> 
+            }
           </View>
         </View>
       </TouchableNativeFeedback>
