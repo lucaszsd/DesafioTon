@@ -31,7 +31,8 @@ const BaseApp = (props: ThemedComponentProps) => (
   <>
     <SafeAreaView style={props.eva!.style!.safeAreaBg}>
       <StatusBar
-        barStyle="light-content"
+        barStyle="dark-content"
+        backgroundColor={theme['color-primary-500']}
         networkActivityIndicatorVisible
         showHideTransition="fade"
       />
