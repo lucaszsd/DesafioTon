@@ -1,4 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Breed } from 'types/interfaces';
 
 export enum RouteNames {
   StoreItems = 'StoreItems',
@@ -11,7 +12,7 @@ export enum RouteNames {
 export type RootStackParamList = {
   [RouteNames.Counter]: undefined;
   [RouteNames.Dogs]: undefined;
-  [RouteNames.ItemDetail]: undefined;
+  [RouteNames.ItemDetail]: Breed;
 };
 
 export interface NavProps {
