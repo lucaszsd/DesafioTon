@@ -7,8 +7,7 @@ import {
   StyleService,
   useStyleSheet, 
   List,
-  Avatar,
-  Spinner,
+  Avatar, 
   Icon,
   IconProps,
 } from '@ui-kitten/components';
@@ -81,9 +80,7 @@ const ShoppingCart = () => {
   const cart = useAppSelector(state => state.shoppingCartReducer.shoppingCart); 
   const products = useAppSelector(state => state.shoppingCartReducer.products); 
   
-  const productData = ( id : string) => {
-    // return id
-    // return id
+  const productData = (id: string) => { 
     let productData:Breed = products.filter(product => product.id == id)[0]
     return productData;
   }
@@ -91,14 +88,13 @@ const ShoppingCart = () => {
   const RemoveIcon = (props: IconProps) => <Icon {...props} name="close-circle-outline" />;
 
   const renderItem = ({ item }: ListRenderItemInfo<Product>) => {
-
-    const imageItem = {uri: 'https://www.fillmurray.com/100/100'};
+ 
     const product = productData(item.id);
-
+ 
     return(  
       <View style = {styles.item}>
         <View style={styles.temperamentWrapper}>
-          <Avatar size="giant" shape = 'rounded' source={imageItem} />
+          <Avatar size="giant" shape = 'rounded' source={{uri:product.image.url}} />
           <Text category="p2" style={styles.temperament}>
             {product.name}
           </Text>
