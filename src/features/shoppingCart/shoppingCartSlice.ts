@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ShoppingCartReducerState } from 'types/interfaces';
+import { Breed, ShoppingCartReducerState } from 'types/interfaces';
 
 const initialState: ShoppingCartReducerState = {
   products:[],
@@ -31,10 +31,15 @@ const shoppingCartSlice = createSlice({
       // state.value += action.payload;
     },
 
+    setProductList(state, action: PayloadAction<Breed[]>){
+      state.products = action.payload;
+      console.log('Lista de Produtos: ', action.payload)
+    },
+
     addProductToCart(state, action: PayloadAction<string>){
-      console.log(action.payload)
+      // console.log(action.payload)
       state.shoppingCart.push({id: action.payload, quantity: 1, selected: true})
-      console.log(state.shoppingCart);
+      // console.log(state.shoppingCart);
     },
 
     removeProductFromCart(state, action: PayloadAction<string>){ 
@@ -44,5 +49,5 @@ const shoppingCartSlice = createSlice({
   },
 });
 
-export const { increment, decrement, reset, addCount, addProductToCart, removeProductFromCart } = shoppingCartSlice.actions;
+export const { increment, decrement, reset, addCount, addProductToCart, removeProductFromCart, setProductList } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;

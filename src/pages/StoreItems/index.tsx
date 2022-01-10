@@ -21,6 +21,7 @@ import { NavProps, RouteNames } from '../../routes/nav_types';
 import { Breed } from 'types/interfaces';
 import { useDispatch } from 'react-redux'; 
 import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
+
 const themedStyles = StyleService.create({
   btn: { margin: 16 }, 
   maxFlex: {
@@ -64,6 +65,8 @@ const StoreItems = () => {
   const styles = useStyleSheet(themedStyles);
   const { data = [], isFetching } = useFetchBreedsQuery(20);
   
+  dispatch(ShoppingCartActions.setProductList(data))
+
   if (isFetching) {
     return (
       <Layout style={[styles.maxFlex, styles.centerContent]}>

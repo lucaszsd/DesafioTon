@@ -9,13 +9,15 @@ import {
   List,
   Avatar,
   Spinner,
+  Icon,
+  IconProps,
 } from '@ui-kitten/components';
 import { useDispatch } from 'react-redux';
 import { Image, ListRenderItemInfo, View } from 'react-native';
 
 //Importações Intearnas
 import { useAppSelector } from 'hooks/store'; 
-import { Product } from 'types/interfaces';  
+import { Breed, Product } from 'types/interfaces';  
 import { RouteNames } from '../../routes/nav_types'; 
 import TopNavigationHeader from 'components/TopNavigationHeader'; 
 import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
@@ -23,9 +25,11 @@ import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
 interface selectedItems{
   selectedItems: number
 } 
-
+ 
 const themedStyles = StyleService.create({
   btn: { margin: 16 },
+
+  removeBtn: { borderRadius: 30},
 
   itemContainer: { padding: 16},
 
@@ -50,9 +54,11 @@ const themedStyles = StyleService.create({
   },
 
   item: {
-    marginVertical: 8,
-    paddingHorizontal: 16,
     flex: 1, 
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 8,
+    paddingLeft: 16,
   },
 
   temperamentWrapper: {
@@ -64,7 +70,7 @@ const themedStyles = StyleService.create({
   },
 
   temperament: { 
-    paddingLeft: 8,
+    paddingLeft: 24,
   },
 });
 
@@ -73,20 +79,31 @@ const ShoppingCart = () => {
   const dispatch = useDispatch()
   const styles = useStyleSheet(themedStyles); 
   const cart = useAppSelector(state => state.shoppingCartReducer.shoppingCart); 
+  const products = useAppSelector(state => state.shoppingCartReducer.products); 
   
+  const productData = ( id : string) => {
+    // return id
+    // return id
+    let productData:Breed = products.filter(product => product.id == id)[0]
+    return productData;
+  }
+
+  const RemoveIcon = (props: IconProps) => <Icon {...props} name="close-circle-outline" />;
+
   const renderItem = ({ item }: ListRenderItemInfo<Product>) => {
 
     const imageItem = {uri: 'https://www.fillmurray.com/100/100'};
+    const product = productData(item.id);
 
     return(  
       <View style = {styles.item}>
         <View style={styles.temperamentWrapper}>
-          <Avatar size="giant" source={imageItem} />
+          <Avatar size="giant" shape = 'rounded' source={imageItem} />
           <Text category="p2" style={styles.temperament}>
-            {item.id}
+            {product.name}
           </Text>
-          <Button status = 'danger' onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}>Remove</Button>
         </View> 
+        <Button size = 'giant' appearance={'ghost'} status = 'danger' style = {styles.removeBtn} accessoryRight={RemoveIcon} onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}/>
       </View>
     )
   };
