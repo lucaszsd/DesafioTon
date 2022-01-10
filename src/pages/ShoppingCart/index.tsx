@@ -1,32 +1,34 @@
+//Importações Externas
+import React from 'react';
 import {
-  Button,
-  Icon,
+  Button, 
   Layout,
   Text,
   StyleService,
-  useStyleSheet,
-  TopNavigation,
-  IconProps,
-  TopNavigationAction,
-  Card,
+  useStyleSheet, 
   List,
   Avatar,
   Spinner,
 } from '@ui-kitten/components';
-import TopNavigationHeader from 'components/TopNavigationHeader';
-import React from 'react';
-import { Image, ListRenderItemInfo, View, ViewProps } from 'react-native';
-import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
-import { NavProps, RouteNames } from '../../routes/nav_types'; 
-import { Breed, Product, ShoppingCartReducerState } from 'types/interfaces';
-import { useSelector } from 'react-redux';
-import { useAppSelector } from 'hooks/store'; 
+import { Image, ListRenderItemInfo, View } from 'react-native';
 
- 
+//Importações Intearnas
+import { useAppSelector } from 'hooks/store'; 
+import { RouteNames } from '../../routes/nav_types'; 
+import TopNavigationHeader from 'components/TopNavigationHeader';
+import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
+import { Breed, Product, ShoppingCartReducerState } from 'types/interfaces'; 
+
+interface selectedItems{
+  selectedItems: number
+} 
+
 const themedStyles = StyleService.create({
   btn: { margin: 16 },
 
   itemContainer: { padding: 16},
+
+  selectedItems: { fontWeight: 'bold' },
 
   maxFlex: {
     flex: 1, 
@@ -43,7 +45,7 @@ const themedStyles = StyleService.create({
 
   contentContainer: {
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 16,
   },
 
   item: {
@@ -68,32 +70,9 @@ const themedStyles = StyleService.create({
 
 
 const ShoppingCart = () => {
-  const styles = useStyleSheet(themedStyles);
-  const { data = [], isFetching } = useFetchBreedsQuery(20);  
+  const styles = useStyleSheet(themedStyles); 
   const cart = useAppSelector(state => state.shoppingCartReducer.shoppingCart); 
- 
-  if (isFetching) {
-    return (
-      <Layout style={[styles.maxFlex, styles.centerContent]}>
-        <Spinner/>
-      </Layout>
-    );
-  }
   
-  const renderItemHeader = (
-    headerProps: ViewProps | undefined,
-    breed: Breed,
-  ) => (
-    <View {...headerProps}>
-      <Text category="h6">{breed.name}</Text>
-    </View>
-  );
-
-  const renderItemFooter = (
-    footerProps: ViewProps | undefined,
-    breed: Breed,
-  ) => <Text {...footerProps}>{breed.life_span}</Text>;
-
   const renderItem = ({ item }: ListRenderItemInfo<Product>) => {
 
     const imageItem = {uri: 'https://www.fillmurray.com/100/100'};
@@ -117,7 +96,15 @@ const ShoppingCart = () => {
 
     return(
       <View style={[styles.maxFlex, styles.centerContent]}>
-          <Image source={imageCart} style={{ height: 180, width: 180 }} />
+        <Image source={imageCart} style={{ height: 180, width: 180 }} />
+      </View>
+    )
+  }
+
+  const SelectedItems = (props: selectedItems) => {
+    return(
+      <View style = {styles.itemContainer}>
+        <Text category={'s1'} style = {styles.selectedItems}>{props.selectedItems == 1 ? `1 item selecionado` : `${props.selectedItems} items selecionados`}</Text>
       </View>
     )
   }
@@ -125,9 +112,7 @@ const ShoppingCart = () => {
   return (
     <Layout style={styles.maxFlex}>  
       <TopNavigationHeader backButton={true} title = {'Carrinho de Compras'}/> 
-      <View style = {styles.itemContainer}>
-        <Text>{`${cart.length} Items selecionados`}</Text>
-      </View>
+      <SelectedItems selectedItems = {cart.length}/>
       {cart.length == 0? 
       <EmptyShoppingCart/>:
       <List
