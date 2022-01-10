@@ -1,25 +1,23 @@
+//Exportações Externas
+import React from 'react';
 import {
-  Button,
-  Icon,
+  Button, 
   Layout,
   Text,
   StyleService,
-  useStyleSheet,
-  TopNavigation,
-  IconProps,
-  TopNavigationAction,
-  Card,
-  List,
+  useStyleSheet, 
   Avatar,
   Spinner,
 } from '@ui-kitten/components';
-import TopNavigationHeader from 'components/TopNavigationHeader';
-import React from 'react';
-import { FlatList, ListRenderItemInfo, View, ViewProps } from 'react-native'; 
-import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
-import { NavProps, RouteNames } from '../../routes/nav_types'; 
-import { Breed } from 'types/interfaces';
 import { useDispatch } from 'react-redux'; 
+import TopNavigationHeader from 'components/TopNavigationHeader';
+import { FlatList, ListRenderItemInfo, View } from 'react-native'; 
+
+//Importações Interanas
+import { useAppSelector } from 'hooks/store';
+import { RouteNames } from 'routes/nav_types'; 
+import { Breed, Product } from 'types/interfaces';
+import { useFetchBreedsQuery } from 'features/dogs/dogs_api_slice';
 import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
 
 const themedStyles = StyleService.create({
@@ -36,7 +34,7 @@ const themedStyles = StyleService.create({
   }, 
   contentContainer: {
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 16,
   }, 
   item: {
     marginVertical: 16,
@@ -47,13 +45,12 @@ const themedStyles = StyleService.create({
   temperamentWrapper: {
     display: 'flex', 
     alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'red',
+    justifyContent: 'center', 
     flexWrap: 'wrap',
   }, 
   temperament: { 
-    marginTop: 8,
-    fontWeight: 'bold',
+    marginTop: 16,
+    fontWeight: 'bold', 
   },
 });
 
@@ -65,7 +62,14 @@ const StoreItems = () => {
   const styles = useStyleSheet(themedStyles);
   const { data = [], isFetching } = useFetchBreedsQuery(20);
   
+  const cart = useAppSelector(state => state.shoppingCartReducer.shoppingCart); 
+
   dispatch(ShoppingCartActions.setProductList(data))
+
+  const shoppingCartData = (id: string) => {  
+    let shoppingCartItemData:Product = cart.filter(item => item.id == id)[0]
+    return shoppingCartItemData;
+  }
 
   if (isFetching) {
     return (
@@ -75,17 +79,24 @@ const StoreItems = () => {
     );
   }
    
-  const renderItem = ({ item }: ListRenderItemInfo<Breed>) => ( 
-    <View style={styles.item}>
-      <View style={styles.temperamentWrapper}>
-        <Avatar size="giant" shape='rounded' style = {{width: 96, height: 96}} source={{ uri: item.image.url }} />
-        <Text category="s1" style={styles.temperament}>
-          {item.name}
-        </Text>
-      <Button status = {'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>Add</Button>
+  const renderItem = ({ item }: ListRenderItemInfo<Breed>) => {
+
+    const shoppingCartItem = shoppingCartData(item.id)
+      
+    return(
+      <View style={styles.item}>
+        <View style={styles.temperamentWrapper}>
+          <Avatar size="giant" shape='rounded' style = {{width: 128, height: 128}} source={{ uri: item.image.url }} />
+          <Text category="h6" style={styles.temperament}>
+            {item.name}
+          </Text>
+        </View>
+        <View style = {{width:'100%'}}>
+          <Button status = {shoppingCartItem ? 'danger' : 'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>{shoppingCartItem ? 'Remove' : 'Add'}</Button>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 
   return (
     <Layout style={styles.maxFlex}>  

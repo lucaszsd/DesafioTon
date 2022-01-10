@@ -106,11 +106,13 @@ const ShoppingCart = () => {
 
   const EmptyShoppingCart = () => {
      
-    const imageCart = {uri: 'https://www.fillmurray.com/100/100'};
+    const imageCart = require('../../../assets/images/emptyCart.png');
 
     return(
       <View style={[styles.maxFlex, styles.centerContent]}>
-        <Image source={imageCart} style={{ height: 180, width: 180 }} />
+        <Text category={'h6'}>Carrinho vazio</Text>
+        <Image source={imageCart} style={{ height: 196, width: 196 }} />
+        <Text>Selecione itens na loja</Text>
       </View>
     )
   }
