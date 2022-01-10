@@ -11,12 +11,13 @@ import {
 } from '@ui-kitten/components';
 import { useDispatch } from 'react-redux'; 
 import TopNavigationHeader from 'components/TopNavigationHeader';
-import { FlatList, ListRenderItemInfo, View } from 'react-native'; 
+import { FlatList, ListRenderItemInfo, TouchableNativeFeedback, TouchableNativeFeedbackBase, View } from 'react-native'; 
 
 //Importações Interanas
 import { useAppSelector } from 'hooks/store';
 import { RouteNames } from 'routes/nav_types'; 
 import { Breed, Product } from 'types/interfaces';
+import NavigationService from 'routes/NavigationService';
 import { useFetchBreedsQuery } from 'features/dogs/dogs_api_slice';
 import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
 
@@ -84,17 +85,19 @@ const StoreItems = () => {
     const shoppingCartItem = shoppingCartData(item.id)
       
     return(
-      <View style={styles.item}>
-        <View style={styles.temperamentWrapper}>
-          <Avatar size="giant" shape='rounded' style = {{width: 128, height: 128}} source={{ uri: item.image.url }} />
-          <Text category="h6" style={styles.temperament}>
-            {item.name}
-          </Text>
+      <TouchableNativeFeedback onPress={() => NavigationService.navigate(RouteNames.ItemDetail, item)}>
+        <View style={styles.item}>
+          <View style={styles.temperamentWrapper}>
+            <Avatar size="giant" shape='rounded' style = {{width: 128, height: 128}} source={{ uri: item.image.url }} />
+            <Text category="h6" style={styles.temperament}>
+              {item.name}
+            </Text>
+          </View>
+          <View style = {{width:'100%'}}>
+            <Button status = {shoppingCartItem ? 'danger' : 'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>{shoppingCartItem ? 'Remove' : 'Add'}</Button>
+          </View>
         </View>
-        <View style = {{width:'100%'}}>
-          <Button status = {shoppingCartItem ? 'danger' : 'success'} style = {styles.btn} onPress={() => dispatch(ShoppingCartActions.addProductToCart(item.id))}>{shoppingCartItem ? 'Remove' : 'Add'}</Button>
-        </View>
-      </View>
+      </TouchableNativeFeedback>
     );
   }
 

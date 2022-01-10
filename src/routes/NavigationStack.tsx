@@ -9,6 +9,7 @@ import { NAV_KEYS, RootStackParamList, RouteNames } from './nav_types';
 import StoreItems from 'pages/StoreItems';
 import ShoppingCart from 'pages/ShoppingCart';
 import NavigationService from './NavigationService';
+import ItemDetail from 'pages/ItemDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -79,6 +80,7 @@ function NavigationStack() {
       <Stack.Navigator screenOptions={{ headerShown: false }}> 
         <Stack.Screen name={RouteNames.StoreItems} component={StoreItems} />
         <Stack.Screen name={RouteNames.ShoppingCart} component={ShoppingCart}/>
+        <Stack.Screen name={RouteNames.ItemDetail} component={ItemDetail}/>
         {/* <Stack.Screen name={RouteNames.Counter} component={Counter} />
         <Stack.Screen name={RouteNames.Dogs} component={Dogs} /> */}
       </Stack.Navigator>

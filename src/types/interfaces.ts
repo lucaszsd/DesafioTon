@@ -6,8 +6,18 @@ export interface Breed {
   image: {
     url: string;
   };
+  origin: string;
+  weight: {
+    imperial: string;
+    metric: string;
+  },
+  height: {
+    imperial: string;
+    metric: string;
+  },
+  breed_group: string;
 }
-
+ 
 export interface Product {
   id: string,
   quantity: Number,

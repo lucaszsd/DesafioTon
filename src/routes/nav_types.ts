@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 export enum RouteNames {
   StoreItems = 'StoreItems',
   ShoppingCart = 'ShoppingCart',
+  ItemDetail = 'ItemDetail',
   Counter = 'Counter',
   Dogs = 'Dogs',
 }
@@ -10,6 +11,7 @@ export enum RouteNames {
 export type RootStackParamList = {
   [RouteNames.Counter]: undefined;
   [RouteNames.Dogs]: undefined;
+  [RouteNames.ItemDetail]: undefined;
 };
 
 export interface NavProps {
@@ -20,6 +22,10 @@ export interface NavProps {
   [RouteNames.Dogs]: NativeStackScreenProps<
     RootStackParamList,
     RouteNames.Dogs
+  >;
+  [RouteNames.ItemDetail]: NativeStackScreenProps<
+    RootStackParamList,
+    RouteNames.ItemDetail
   >;
 }
 
