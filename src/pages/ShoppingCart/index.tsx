@@ -16,8 +16,10 @@ import {
 import TopNavigationHeader from 'components/TopNavigationHeader';
 import React from 'react';
 import { ListRenderItemInfo, View, ViewProps } from 'react-native';
-import { Breed, useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
+import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
 import { NavProps, RouteNames } from '../../routes/nav_types';
+
+import { Breed } from 'types/interfaces';
 
 const themedStyles = StyleService.create({
   btn: { margin: 16 },
@@ -62,7 +64,8 @@ const themedStyles = StyleService.create({
 const ShoppingCart = () => {
   const styles = useStyleSheet(themedStyles);
   const { data = [], isFetching } = useFetchBreedsQuery(20);
- 
+   
+  console.log('\n\n\n\n\nJSONS ' + JSON.stringify(data))
   if (isFetching) {
     return (
       <Layout style={[styles.maxFlex, styles.centerContent]}>

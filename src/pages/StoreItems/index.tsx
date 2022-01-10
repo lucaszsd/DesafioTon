@@ -16,8 +16,11 @@ import {
 import TopNavigationHeader from 'components/TopNavigationHeader';
 import React from 'react';
 import { FlatList, ListRenderItemInfo, View, ViewProps } from 'react-native'; 
-import { Breed, useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
+import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
 import { NavProps, RouteNames } from '../../routes/nav_types';
+import shoppingActions from 'store/shoppingCart/actions';
+import { Breed } from 'types/interfaces';
+import { useDispatch } from 'react-redux';
 
 const themedStyles = StyleService.create({
   btn: { margin: 16 },
@@ -67,7 +70,7 @@ const themedStyles = StyleService.create({
 const StoreItems = () => {
   const styles = useStyleSheet(themedStyles);
   const { data = [], isFetching } = useFetchBreedsQuery(20);
- 
+  // console.log(JSON.stringify(useFetchBreedsQuery(10)));
   if (isFetching) {
     return (
       <Layout style={[styles.maxFlex, styles.centerContent]}>
@@ -75,6 +78,7 @@ const StoreItems = () => {
       </Layout>
     );
   }
+  const dispatch = useDispatch()
   
   const renderItemHeader = (
     headerProps: ViewProps | undefined,
@@ -116,7 +120,7 @@ const StoreItems = () => {
         <Text category="s1" style={styles.temperament}>
           {item.name}
         </Text>
-      <Button status = {'success'} style = {styles.btn}>Add</Button>
+      <Button status = {'success'} style = {styles.btn} onPress={() => dispatch(shoppingActions.addProductToCart(item.id))}>Add</Button>
       </View>
     </View>
   );
