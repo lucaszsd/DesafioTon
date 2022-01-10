@@ -10,14 +10,15 @@ import {
   Avatar,
   Spinner,
 } from '@ui-kitten/components';
+import { useDispatch } from 'react-redux';
 import { Image, ListRenderItemInfo, View } from 'react-native';
 
 //Importações Intearnas
 import { useAppSelector } from 'hooks/store'; 
+import { Product } from 'types/interfaces';  
 import { RouteNames } from '../../routes/nav_types'; 
-import TopNavigationHeader from 'components/TopNavigationHeader';
-import { useFetchBreedsQuery } from '../../features/dogs/dogs_api_slice';
-import { Breed, Product, ShoppingCartReducerState } from 'types/interfaces'; 
+import TopNavigationHeader from 'components/TopNavigationHeader'; 
+import * as ShoppingCartActions from 'features/shoppingCart/shoppingCartSlice';
 
 interface selectedItems{
   selectedItems: number
@@ -62,14 +63,14 @@ const themedStyles = StyleService.create({
     flexWrap: 'wrap',
   },
 
-  temperament: {
-    // width: '80%',
+  temperament: { 
     paddingLeft: 8,
   },
 });
 
 
 const ShoppingCart = () => {
+  const dispatch = useDispatch()
   const styles = useStyleSheet(themedStyles); 
   const cart = useAppSelector(state => state.shoppingCartReducer.shoppingCart); 
   
@@ -84,7 +85,7 @@ const ShoppingCart = () => {
           <Text category="p2" style={styles.temperament}>
             {item.id}
           </Text>
-          <Button>Add</Button>
+          <Button status = 'danger' onPress={() => dispatch(ShoppingCartActions.removeProductFromCart(item.id))}>Remove</Button>
         </View> 
       </View>
     )

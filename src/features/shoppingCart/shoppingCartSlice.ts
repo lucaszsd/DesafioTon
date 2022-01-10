@@ -35,9 +35,14 @@ const shoppingCartSlice = createSlice({
       console.log(action.payload)
       state.shoppingCart.push({id: action.payload, quantity: 1, selected: true})
       console.log(state.shoppingCart);
-    }
+    },
+
+    removeProductFromCart(state, action: PayloadAction<string>){ 
+      state.shoppingCart = state.shoppingCart.filter(item => item.id != action.payload)  
+    },
+    
   },
 });
 
-export const { increment, decrement, reset, addCount, addProductToCart } = shoppingCartSlice.actions;
+export const { increment, decrement, reset, addCount, addProductToCart, removeProductFromCart } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;
