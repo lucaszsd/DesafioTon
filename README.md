@@ -31,12 +31,8 @@ Desenvolvi usando emulador para Android, não tive como testar no iOS, então po
 
 ## Capturas de Tela
 
-![Capturas de tela no Drive](https://github.com/lucaszsd/DesafioTon/blob/main/screenshots/Screenshot_1641848642.png)
-![Capturas de tela no Drive](https://github.com/lucaszsd/DesafioTon/blob/main/screenshots/Screenshot_1641848647.png)
-![Capturas de tela no Drive](https://github.com/lucaszsd/DesafioTon/blob/main/screenshots/Screenshot_1641848661.png)
-![Capturas de tela no Drive](https://github.com/lucaszsd/DesafioTon/blob/main/screenshots/Screenshot_1641848667.png)
-![Capturas de tela no Drive](https://github.com/lucaszsd/DesafioTon/blob/main/screenshots/Screenshot_1641848672.png)
-![Capturas de tela no Drive](https://github.com/lucaszsd/DesafioTon/blob/main/screenshots/Screenshot_1641849758.png)
+![Captura de tela](https://github.com/lucaszsd/DesafioTon/blob/main/screenshots/Screenshot_1641848642.png)
+ 
  
  
 
